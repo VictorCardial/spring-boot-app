@@ -4,6 +4,8 @@ use anotacao;
 
 create user 'victor'@'localhost' identified by 'victor';
 
+GRANT ALL PRIVILEGES ON * . * TO 'victor'@'localhost';
+
 grant select, insert, delete, update on anotacao.* to user@'localhost';
 
 create table usr_usuario (
