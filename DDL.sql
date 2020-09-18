@@ -2,7 +2,7 @@ create schema anotacao;
 
 use anotacao;
 
-create user 'victor'@'localhost' indentified by 'victor';
+create user 'victor'@'localhost' identified by 'victor';
 
 grant select, insert, delete, update on anotacao.* to user@'localhost';
 
