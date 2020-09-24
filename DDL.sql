@@ -30,3 +30,7 @@ primary key(usr_id, aut_id),
 foreign key aut_usuario_fk (usr_id) references usr_usuario(usr_id),
 foreign key aut_autorizacao_fk (aut_id) references aut_autorizacao(aut_id)
 );
+
+insert into usr_usuario (usr_nome,usr_senha) values ('victor','boasenha');
+insert into aut_autorizacao(aut_nome) values ('role_admin');
+insert into uau_usuario_autorizacao (1,1);
