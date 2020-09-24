@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashSet;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -45,6 +46,24 @@ class SpringBootAppApplicationTests {
         assertNotNull(usuario.getAutorizacoes().iterator().next().getId());
     }
 
+    @Test
+    void testaInsercaoAutorizacao()
+    {
+        Usuario usuario=new Usuario();
+        usuario.setNome("Cardial2");
+        usuario.setSenha("123");
+        usuarioRepo.save(usuario);
+        Autorizacao aut=new Autorizacao();
+        aut.setNome("simple_user2");
+        aut.setUsuarios(new HashSet<Usuario>());
+        aut.getUsuarios().add(usuario);
+        autRepo.save(aut);
+        assertNotNull(aut.getUsuarios().iterator().next().getId());
+    }
+    /*nocoes de quem manda no relacionamento, no caso, usuario, onde a tabela uau_usuario_autorizacao foi mapeada
+    quando instancio a lista de autorizacoes pelo usuario, ele salva na tabela de ligacao
+    mas quando instancio lista de usuarios por autorizacoes, ele nao salva, pois esta mapeado em usuario*/
+
     @Test  
     void testaAutorizacao()
     {
@@ -59,5 +78,31 @@ class SpringBootAppApplicationTests {
         assertEquals("victor",aut.getUsuarios().iterator().next().getNome());
     }
 
+    @Test
+    void testaBuscarUsuarioNomeContains()
+    {
+        List<Usuario> usuarios=usuarioRepo.findByNomeContainsIgnoreCase("V");
+        assertFalse(usuarios.isEmpty());
+    }
     
+    @Test
+    void testaBuscaUsuarioNome()
+    {
+        Usuario usuario=usuarioRepo.findByNome("victor");
+        assertNotNull(usuario);
+    }
+
+     @Test
+    void testaBuscaUsuarioNomeSenha()
+    {
+        Usuario usuario=usuarioRepo.findByNomeAndSenha("victor","boasenha");
+        assertNotNull(usuario);
+    }
+
+     @Test
+    void testaBuscaUsuarioNomeAutorizacao()
+    {
+        List<Usuario> usuarios=usuarioRepo.findByAutorizacoesNome("role_admin");
+        assertFalse(usuarios.isEmpty());
+    }
 }
