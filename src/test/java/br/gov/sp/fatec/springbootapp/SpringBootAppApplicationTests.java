@@ -92,10 +92,24 @@ class SpringBootAppApplicationTests {
         assertNotNull(usuario);
     }
 
+    @Test
+    void testaBuscaUsuarioNomeQuery()
+    {
+        Usuario usuario=usuarioRepo.buscaUsuarioporNome("victor");
+        assertNotNull(usuario);
+    }
+
      @Test
     void testaBuscaUsuarioNomeSenha()
     {
         Usuario usuario=usuarioRepo.findByNomeAndSenha("victor","boasenha");
+        assertNotNull(usuario);
+    }
+
+     @Test
+    void testaBuscaUsuarioNomeSenhaQuery()
+    {
+        Usuario usuario=usuarioRepo.busaUsuarioPorNomeESenha("victor","boasenha");
         assertNotNull(usuario);
     }
 
@@ -105,4 +119,12 @@ class SpringBootAppApplicationTests {
         List<Usuario> usuarios=usuarioRepo.findByAutorizacoesNome("role_admin");
         assertFalse(usuarios.isEmpty());
     }
+
+    @Test
+    void testaBuscaUsuarioNomeAutorizacaoQuery()
+    {
+        List<Usuario> usuarios=usuarioRepo.buscaPorNomeAutorizacao("role_admin");
+        assertFalse(usuarios.isEmpty());
+    }
+
 }
