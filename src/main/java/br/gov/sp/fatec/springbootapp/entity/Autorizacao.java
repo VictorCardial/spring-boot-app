@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="aut_autorizacao")
 public class Autorizacao {
@@ -25,6 +27,7 @@ public class Autorizacao {
 
     /*mapeando a tabela uau_usuario_autorizacao que liga autorizacao a usuario n:n*/
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "autorizacoes") //atributo em usuario onde é mapeado o relacionamento.
+    @JsonIgnore
     private Set<Usuario> usuarios;
 
     /*get/set id*/
