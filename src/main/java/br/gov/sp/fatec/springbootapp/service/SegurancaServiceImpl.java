@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.gov.sp.fatec.springbootapp.entity.Autorizacao;
 import br.gov.sp.fatec.springbootapp.entity.Usuario;
+import br.gov.sp.fatec.springbootapp.exception.RegistroNaoEncontradoException;
 import br.gov.sp.fatec.springbootapp.repository.AutorizacaoRepository;
 import br.gov.sp.fatec.springbootapp.repository.UsuarioRepository;
 
@@ -68,7 +69,7 @@ public class SegurancaServiceImpl implements SegurancaService {
         {
             return usuarioOp.get();
         }
-         throw new RuntimeException("usuario nao encontrado!");
+         throw new RegistroNaoEncontradoException("usuario nao encontrado!");
     }
 
     @Override
@@ -79,7 +80,7 @@ public class SegurancaServiceImpl implements SegurancaService {
         {
             return usuario;
         }
-        throw new RuntimeException("usuario nao encontrado!");
+        throw new RegistroNaoEncontradoException("usuario nao encontrado!");
     }
 
     public Autorizacao buscarAutorizacaoPorNome(String nome)
@@ -89,6 +90,6 @@ public class SegurancaServiceImpl implements SegurancaService {
         {
             return autorizacao;
         }
-        throw new RuntimeException("autorizacao nao encontrada!");
+        throw new RegistroNaoEncontradoException("autorizacao nao encontrada!");
     }
 }
