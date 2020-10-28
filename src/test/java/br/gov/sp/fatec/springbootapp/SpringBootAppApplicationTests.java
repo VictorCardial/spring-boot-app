@@ -1,5 +1,6 @@
 package br.gov.sp.fatec.springbootapp;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,7 +9,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
+import org.springframework.jdbc.core.JdbcTemplate;
+//import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.gov.sp.fatec.springbootapp.entity.Autorizacao;
@@ -19,7 +21,7 @@ import br.gov.sp.fatec.springbootapp.service.SegurancaService;
 
 @SpringBootTest
 @Transactional
-@Rollback
+//@Rollback
 class SpringBootAppApplicationTests {
 
     @Autowired
@@ -30,6 +32,19 @@ class SpringBootAppApplicationTests {
 
     @Autowired
     private SegurancaService segService;
+
+
+// banco de dados h2 configurado a parte para rodar os testes...
+    @BeforeAll
+    static void init(@Autowired JdbcTemplate jdbcTemplate)
+    {
+        jdbcTemplate.update("insert into usr_usuario(usr_nome,usr_senha) values (?,?)",
+        "victor","boasenha");
+        jdbcTemplate.update("insert into aut_autorizacao(aut_nome) values (?)",
+        "role_admin");
+        jdbcTemplate.update("insert into uau_usuario_autorizacao(usr_id,aut_id) values (?,?)",
+        1L,1L);
+    }
     
 	@Test
 	void contextLoads() {
