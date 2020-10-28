@@ -69,12 +69,14 @@ public class SegurancaServiceImpl implements SegurancaService {
     // O spring oferece a possibilidade de autenticar os metodos, não apenas as
     // rotas no controller.
     @Override
-    @PreAuthorize("isAuthenticated()")
+    //@PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Usuario> buscarTodosUsuarios() {
         return usuarioRepo.findAll();
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN','USUARIO')")
     public Usuario buscarUsuarioPorId(Long id) {
         Optional<Usuario> usuarioOp = usuarioRepo.findById(id);
         if (usuarioOp.isPresent()) {
@@ -84,6 +86,7 @@ public class SegurancaServiceImpl implements SegurancaService {
     }
 
     @Override
+    @PreAuthorize("isAuthenticated()")
     public Usuario buscarUsuarioPorNome(String nome) {
         Usuario usuario = usuarioRepo.findByNome(nome);
         if (usuario != null) {
@@ -92,6 +95,8 @@ public class SegurancaServiceImpl implements SegurancaService {
         throw new RegistroNaoEncontradoException("usuario nao encontrado!");
     }
 
+    @Override
+    @PreAuthorize("isAuthenticated()")
     public Autorizacao buscarAutorizacaoPorNome(String nome) {
         Autorizacao autorizacao = autRepo.findByNome(nome);
         if (autorizacao != null) {

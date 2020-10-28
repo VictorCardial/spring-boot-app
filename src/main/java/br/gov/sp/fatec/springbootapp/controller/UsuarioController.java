@@ -58,7 +58,7 @@ public class UsuarioController {
     public ResponseEntity <Usuario> cadastraNovoUsuario(@RequestBody Usuario usuario,
         UriComponentsBuilder uriComponentsBuilder)
     {
-        usuario = segurancaService.criarUsuario(usuario.getNome(), usuario.getSenha(),"role_usuario");
+        usuario = segurancaService.criarUsuario(usuario.getNome(), usuario.getSenha(),"ROLE_USUARIO");
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setLocation(
             uriComponentsBuilder.path(
