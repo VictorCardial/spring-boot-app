@@ -2,16 +2,16 @@ create schema anotacao;
 
 use anotacao;
 
-create user 'victor'@'localhost' identified by 'victor';
+create user 'victor3'@'localhost' identified by 'victor3';
 
-GRANT ALL PRIVILEGES ON * . * TO 'victor'@'localhost';
+GRANT ALL PRIVILEGES ON * . * TO 'victor3'@'localhost';
 
 
 
 create table usr_usuario (
 usr_id bigint unsigned not null auto_increment,
 usr_nome varchar(20) not null,
-usr_senha varchar(50) not null,
+usr_senha varchar(100) not null,
 primary key(usr_id),
 unique key uni_usuario_nome  (usr_nome)
 );
@@ -31,6 +31,6 @@ foreign key aut_usuario_fk (usr_id) references usr_usuario(usr_id),
 foreign key aut_autorizacao_fk (aut_id) references aut_autorizacao(aut_id)
 );
 
-insert into usr_usuario (usr_nome,usr_senha) values ('victor','boasenha');
-insert into aut_autorizacao(aut_nome) values ('role_admin');
+insert into usr_usuario (usr_nome,usr_senha) values ('admin','$2a$10$i3.Z8Yv1Fwl0I5SNjdCGkOTRGQjGvHjh/gMZhdc3e7LIovAklqM6C');
+insert into aut_autorizacao(aut_nome) values ('ROLE_ADMIN');
 insert into uau_usuario_autorizacao values (1,1);
