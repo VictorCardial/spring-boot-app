@@ -12,6 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 @EnableWebSecurity
@@ -25,7 +26,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
-        http.csrf().disable().httpBasic().and()
+
+        //foi tirada a autenticação basica de antes (.httpBasic().and()) e colocado o filtro no lugar
+        //instancia o filtro personalizado antes do filtro do spring 
+        http.csrf().disable().addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+        //UsernamePasswordAuthenticationFilter, classe do springSecurity
         // isso desabilita a sessao de criação no Spring Security
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
